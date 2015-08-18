@@ -1,1 +1,0 @@
-var addresses = ['Norway', 'Africa', 'Asia','North America','South America','Toronto, Ontario', '6 Balsdon Crescent, Whitby', 'Ottawa', 'Montreal', 'New York', 'Vermont', 'Maine', 'Charlottetown, PEI'];
