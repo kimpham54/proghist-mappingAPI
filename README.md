@@ -8,11 +8,10 @@ We're going to take a plain csv file and plug it into a web map!
 The original csv is here: https://github.com/Robinlovelace/Creating-maps-in-R/blob/master/data/census-historic-population-borough.csv
 
 ### Download the csv
-To download it quickly you can do it here:
-https://docs.google.com/spreadsheets/d/1GN0DuxNn7xpkGNnFDWP4-5mdYs1XJqoSt1G2fDwu1SA/edit#gid=1761435061
+1. To download it quickly you can do it here: https://docs.google.com/spreadsheets/d/1GN0DuxNn7xpkGNnFDWP4-5mdYs1XJqoSt1G2fDwu1SA/edit#gid=1761435061
+2. Census with country https://docs.google.com/spreadsheets/d/1Zune3eb8zH5KKGmWpGDqY9jP-DMxHAa4xIDUYzhBybo/edit#gid=1761435061
 
-census with country
-https://docs.google.com/spreadsheets/d/1Zune3eb8zH5KKGmWpGDqY9jP-DMxHAa4xIDUYzhBybo/edit#gid=1761435061
+- Github: https://github.com/kimpham54/proghist-mappingAPI/tree/master/step1-csv
 
 ### Geocode the placenames in the CSV using Geopy, Pandas
 
@@ -31,9 +30,6 @@ https://github.com/geopy/geopy
 Pandas is a python data analysis library that can be used to manipulate csv and other files.  It share some functionality with R - using data frames, able to select, plot, index and analyse data.
 
 The following script was made in python using pandas and geopy
-
-- explain what is GDAL?  commonly used in GIS, for writing python scripts and automating processes.  you can for instance batch convert 500 csv files into GEOJSON if you wanted to
-
 
 ```python
 
@@ -57,26 +53,30 @@ if __name__ == '__main__':
 
 ```
 
+- Github: https://github.com/kimpham54/proghist-mappingAPI/tree/master/step2-geocode
 
 ### Making GeoJSON
 
-Couple ways to make GeoJSON
+There are a couple ways to make GeoJSON
 
-UI tool
-http://www.convertcsv.com/csv-to-geojson.htm
+1. UI tool http://www.convertcsv.com/csv-to-geojson.htm
 
-or use ogr2ogr
-http://gis.stackexchange.com/questions/140219/what-are-some-ways-to-convert-a-csv-file-to-geojson-while-preserving-data-types
+2. or use ogr2ogr http://gis.stackexchange.com/questions/140219/what-are-some-ways-to-convert-a-csv-file-to-geojson-while-preserving-data-types
 
-install gdal http://www.kyngchaos.com/software/frameworks, which comes with ogr2ogr
+- install gdal http://www.kyngchaos.com/software/frameworks, which comes with ogr2ogr
+- explain what is GDAL?  commonly used in GIS, for writing python scripts and automating processes.  you can for instance batch convert 500 csv files into GEOJSON if you wanted to
+
 run this in the CLI
+
 
 ```
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
 
 ```
 
-Create a VRT file.  For more documentation: http://www.gdal.org/drv_vrt.html.  Make sure your layername, filename, srcdatasource all have the same name.  Indicate all properties/attributes you want to have in your geojson
+Create a VRT file.  For more documentation: http://www.gdal.org/drv_vrt.html.  Make sure your layername, filename, srcdatasource all have the same name.  Indicate all properties/attributes you want to have in your geojson. 
+
+- talk about how geojson is not like json.  json is a data format, geojson is a json specification with geoproperties.  that's why it's not so straightforward to convert csv to geojson 
 
 
 ```xml
@@ -136,6 +136,9 @@ Your geoJSON should look something like this:
 
 definitely validate/test it out using http://geojson.io.  It's a useful tool!
 
+Github: https://github.com/kimpham54/proghist-mappingAPI/tree/master/step3-vrt
+
+
 ### You finally have GeoJSON.  Lets put it in a map!
 
 ### link to this example on google site
@@ -191,8 +194,8 @@ run
 ```
 python -m SimpleHTTPServer
 ```
-have your geojson and html file in the same directory
-access at localhost:8000 open your html file and you'll see your map
+you may need to adjust the paths or change the source file if your html file isn't in the same directory as your data file
+access at localhost:8000, navigate to your html file and you'll see your map
 
 if you're diehard open source, use 
 
@@ -262,15 +265,12 @@ var countries = {
 
 ```
 
-Mapbox, Cartodb, so many other plugins you can use with leaflet
+https://github.com/kimpham54/proghist-mappingAPI/tree/master/step4-webmap
 
-popup of info for points
+### OK What did I just make?
 
-time based data
+Introduce the following concepts of web mapping:
 
-county boundaries
-
-###OK What did I just make?
 * tiles
 * vector/raster
 * layers
@@ -282,4 +282,13 @@ county boundaries
 * controls
 * events
 http://leafletjs.com/reference.html
+
+
+
+### Next part of the lesson
+
+Mapbox, Cartodb, so many other plugins you can use with leaflet
+popup of info for points
+time based data
+county boundaries
 
