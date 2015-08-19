@@ -7,7 +7,7 @@ from geopy.geocoders import Nominatim, GoogleV3
 
 def main():
 	io = pandas.read_csv('census_borough.csv', index_col=False, header=0, sep=",")
-	name = io['Area_Name']
+	# name = io['Area_Name']
 	geolocator = Nominatim()
 	# geolocator = GoogleV3()
 	# io['city_coord'] = io['Area_Name'].apply(geolocator.geocode).apply(lambda x: (x.latitude, x.longitude))

@@ -10,7 +10,7 @@ namecolumn=str(sys.argv[2])
 
 def main():
 	io = pandas.read_csv(inputfile, index_col=False, header=0, sep=",")
-	name = io[namecolumn]
+	# name = io[namecolumn]
 	# geolocator = Nominatim()
 	geolocator = GoogleV3()
 	
