@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<!-- step 1 -->
 
-<!-- step 2 -->
 <head>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-<!-- step 3 -->
-<script src="census.js" type="text/javascript"></script>
+<!-- new data source -->
+<script src="stations.geojson" type="text/javascript"></script>
 
-<!-- step 4 -->
 <style>
 #map {
 	width:960px;
@@ -18,14 +15,14 @@
 </style>
 </head>
 
-<!-- step 5 -->
 
 <body>
 	<div id="map"></div>
 
-<!-- step 6 -->
 <script type="text/javascript">
-var map = L.map('map').setView([51.505, -0.09], 10);
+
+// set viewport to new area for stations
+var map = L.map('map').setView([40.0, -101.2], 4);
 
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -38,21 +35,22 @@ var boroughStyle = {
 		'weight': 2,
 		'opacity': 0.1
 	};
-	
+
+// change properties
 	function popup(feature, layer) {
-		if (feature.properties && feature.properties.Area_Name) {
-			layer.bindPopup(feature.properties.Area_Name + '<p><b> 2001 Population: ' + feature.properties.Pop_2001 + '</b></p>' + '<p><b> 1801 Population ' + feature.properties.Pop_1801 + '</b></p>');
+		if (feature.properties && feature.properties.name) {
+			layer.bindPopup(feature.properties.name + '<p><b> Rail Line: ' + feature.properties.line);
 		}
 	}
-	
-	L.geoJson(boroughs, {
+
+// change declaration 
+	var geoJSON = L.geoJson(stations, {
 		onEachFeature: popup,
 		style: boroughStyle
 	}).addTo(map);
 
 </script>
 
-<!-- step 7 -->
 </body>
 </html>
 

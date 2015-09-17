@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+
 <!-- step 1 -->
+<!DOCTYPE html>
 
 <!-- step 2 -->
 <head>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
-<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
 
 <!-- step 3 -->
 <script src="census.js" type="text/javascript"></script>
@@ -30,30 +28,19 @@
 <script type="text/javascript">
 var map = L.map('map').setView([51.505, -0.09], 10);
 
-L.mapbox.accessToken = 'pk.eyJ1Ijoia2ltcGhhbTU0IiwiYSI6IkdJX0tvM2cifQ.fVsdGC_QJrFYZ3SxZCsvhQ';
-
-L.tileLayer('https://api.mapbox.com/v4/kimpham54.au2i6bt9/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
-		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> and <a href="https://www.mapbox.com/tos/">Mapbox</a>'
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
 
-
-
-var boroughStyle = {
-		'color': "#fff",
-		'weight': 2,
-		'opacity': 0.1
-	};
-	
 	function popup(feature, layer) {
 		if (feature.properties && feature.properties.Area_Name) {
 			layer.bindPopup(feature.properties.Area_Name + '<p><b> 2001 Population: ' + feature.properties.Pop_2001 + '</b></p>' + '<p><b> 1801 Population ' + feature.properties.Pop_1801 + '</b></p>');
 		}
 	}
 	
-	L.geoJson(boroughs, {
+var geoJSON = L.geoJson(boroughs, {
 		onEachFeature: popup,
-		style: boroughStyle
 	}).addTo(map);
 
 </script>
@@ -61,6 +48,13 @@ var boroughStyle = {
 <!-- step 7 -->
 </body>
 </html>
-<!-- step 8: custom icons -->
 
-<!-- step 9: mapbox style -->
+<!--  Exercises
+
+01. change the viewport to [0.0,-10.0], 2
+02. add the 1981 population
+03. stations.geojson, [38, -95.0], 4
+04. custom icons
+05. mapbox style
+
+ -->
