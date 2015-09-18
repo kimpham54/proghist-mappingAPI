@@ -11,38 +11,48 @@ In this lesson, you will learn how to create a web map based on that data.  By t
 Optional: If you wish to follow along with pre-made scripts you can download them from https://github.com/kimpham54/proghist-mappingAPI
 
 To set up your working environment:
-1. Create a directory that you will work from
-2. Import your folder in a text editor like TextWrangler, Notepad++ Sublime Text, Brackets, many more 
+1. Create a directory that you will work from  
+2. Import your folder in a text editor such as [TextWrangler](http://www.barebones.com/products/textwrangler/) for OS X, [Notepad++](https://notepad-plus-plus.org/) for Windows, or [Sublime Text](http://www.sublimetext.com/).
 
 ### Getting Data: Download the csv
-We're going to start with a plain CSV data file and create a web map from it[1]. 
+We're going to start with a plain CSV data file and create a web map from it[1]. **Why the footnotes: Should we just incorporate them into the main text of the lesson?**
 
 The original data file can be downloaded here: https://github.com/Robinlovelace/Creating-maps-in-R/blob/master/data/census-historic-population-borough.csv.  The original source of this data is from the Greater London Authority London Datastore website: http://data.london.gov.uk/dataset/historic-census-population
 
 ### Geocode the placenames: in the CSV using Geopy, Pandas
 
-Now that we have data, the next step is sometimes the hardest part: we need to figure out what to do with it.  In this case, we know what our end goal is: to make a web map with this data. You can work backwards from here to figure out what steps you need to take to achieve your goal.  Web maps typically represent locations and features from geographic data formats like geoJSON and KML. Every location in a grographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. In our data file, we have a list of placenames in our CSV data (the Area Name column), but no coordinates. What we want to do then is to somehow generate coordinates from these locations. This process is called geocoding.
+Now that we have data, the next step is sometimes the hardest part: we need to figure out what to do with it.  In this case, we know what our end goal is: to make a web map with this data. You can work backwards from here to figure out what steps you need to take to achieve your goal.  
+
+Web maps typically represent locations and features from geographic data formats like geoJSON and KML. Every location in a grographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. In our data file, we have a list of placenames in our CSV data (the Area Name column), but no coordinates. What we want to do then is to somehow generate coordinates from these locations. This process is called geocoding.
 
 So here is our first problem to solve:  how can we geocode placenames?[2]
 
-To clarify, we need to figure out how to gather coordinates for a location for each row of a CSV file in order to display these locations on a web map.  There's a simple way to do this: you can look up a coordinate online in Google Maps and put each coordinate in your spreadsheet manually.  But, if you had 5000 points the task becomes a little bit more daunting. If you're faced with a repetitive task, it might be worthwhile approach it programmatically.  If you're familiar with Programming Historian, you might have already noticed that there there are many lessons available on hwo to use Python.  Python is a great beginner programming language because it is easy to read and happens to be used a lot in GIS applications to optimize workflows.  One of the biggest advantages to Python is the impressive amount of libraries which act like pluggable tools to use for many different tasks.  Knowing that this is a good programmatic approach, we're now going to build a python script that will automate geocode every address for us.
+To clarify, we need to figure out how to gather coordinates for a location for each row of a CSV file in order to display these locations on a web map.  
 
-Geopy[3] is a python library that gives you access to the various geocoding APIs.  Geopy makes it easy for Python developers to locate the coordinates of addresses, cities, countries, and landmarks across the globe using third-party geocoders and other data sources. Geopy includes geocoders built by OpenStreetMap Nominatim, ESRI ArcGIS, Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yahoo! PlaceFinder, Yandex, IGN France, GeoNames, NaviData, OpenMapQuest, What3Words, OpenCage, SmartyStreets, geocoder.us, and GeocodeFarm geocoder services. 
+There's a simple way to do this: you can look up a coordinate online in Google Maps and put each coordinate in your spreadsheet manually.  But, if you had 5000 points the task becomes a little bit more daunting. If you're faced with a repetitive task, it might be worthwhile approach it programmatically.  
 
-Pandas is another python library that we will use.  It's very popular library amongst scientists and mathmaticians to manipulate and analyse data.[4]
+If you're familiar with _Programming Historian_, you might have already noticed that there there are many lessons available on how to use Python.  Python is a great beginner programming language because it is easy to read and happens to be used a lot in GIS applications to optimize workflows.  One of the biggest advantages to Python is the impressive amount of libraries which act like pluggable tools to use for many different tasks.  Knowing that this is a good programmatic approach, we're now going to build a Python script that will automate geocode every address for us.
 
-If you've already installed python, open your command line and install the geopy and pandas libraries:
+[Geopy](https://github.com/geopy/geopy) is a Python library that gives you access to the various geocoding APIs.  Geopy makes it easy for Python developers to locate the coordinates of addresses, cities, countries, and landmarks across the globe using third-party geocoders and other data sources. Geopy includes geocoders built by OpenStreetMap Nominatim, ESRI ArcGIS, Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yahoo! PlaceFinder, Yandex, IGN France, GeoNames, NaviData, OpenMapQuest, What3Words, OpenCage, SmartyStreets, geocoder.us, and GeocodeFarm geocoder services. 
+
+[Pandas](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe) is another python library that we will use.  It's very popular library amongst scientists and mathmaticians to manipulate and analyse data.
+
+If you've [already installed Python](http://programminghistorian.org/lessons/introduction-and-installation), open your [command line (using this lesson as a guideline if necessary)](http://programminghistorian.org/lessons/intro-to-bash) and install the Geopy and Pandas libraries:
 
 *Mac only? *
+
+**Hi Kim - is this for Mac only? Do you know how you'd get this working on Windows? Also, more importantly, they will probably need to use sudo to get the following two pip installs to work? Should we tweak to note?**
 
 ```bash
 pip install geopy
 pip install pandas
 ```
 
-Open your text editor and save your blank document as a python script (you can name it geocoder.py).  
+Open your text editor and save your blank document as a python script (name it geocoder.py).  
 
 For the first part of your Python script, you will want to import your data:
+
+**Ian: Can you explain what these commands do? Just one sentence per code block, just walking them through what each line does - i.e. you're importing commands, and then you're reading the CSV - what's index_col and header=0 sep="," - if they're using slightly differently formatted documents, with different seperators, how could they tweak it?**
 
 ```python
 
@@ -60,7 +70,7 @@ def main():
 	io = pandas.read_csv('census-historic-population-borough.csv', index_col=False, header=0, sep=",")
 ```
 
-Next, select the geolocator you want to use.  Here I'm creating two geolocators: Open Street Map's Nominatim and Google's Geocoding API.  You can choose from a list in the geopy documentation[5]:
+Next, select the geolocator you want to use.  Here I'm creating two geolocators: Open Street Map's Nominatim and Google's Geocoding API.  You can choose from a list found in [the geopy documentation](http://geopy.readthedocs.org/):
 
 ```python
 	geolocator = Nominatim()
@@ -83,7 +93,7 @@ if __name__ == '__main__':
   main()
 ```
 
-Do you have a script ready?  Good.  Run the script from your command line.  
+Do you have a script ready? Good.  Run the script from your command line by typing: 
 
 ```bash
 python geocoder.py
