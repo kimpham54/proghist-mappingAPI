@@ -44,9 +44,20 @@ If you've [already installed Python](http://programminghistorian.org/lessons/int
 **Hi Kim - is this for Mac only? Do you know how you'd get this working on Windows? Also, more importantly, they will probably need to use sudo to get the following two pip installs to work? Should we tweak to note?**
 
 ```bash
+pip install numpy
+pip install python-dateutil
+pip install pytz
 pip install geopy
 pip install pandas
 ```
+
+You may need to upgrade them if you encounter an error when using Python (i.e. an ImportError). In order to do so, the following command works:
+
+```bash
+pip install python --uprade
+```
+
+Repeat for the other dependencies.
 
 Open your text editor and save your blank document as a python script (name it geocoder.py).  
 
@@ -112,7 +123,9 @@ geopy.exc.GeocoderQuotaExceeded: The given key has gone over the requests limit 
 
 Now that you have a spreadsheet full of coordinate data, we can convert the CSV spreadsheet into a format that web maps like, like GeoJSON.  GeoJSON is a web mapping standard of JSON data.  There are a couple of ways to make GeoJSON
 
-1. The easiest, recommended way is to use a UI tool developed by Mapbox: http://geojson.io.  All you have to do is click and drag your csv into the data window, and it will automatically format your data into GeoJSON for you[6].
+1. The easiest, recommended way is to use a UI tool developed by Mapbox: http://geojson.io.  All you have to do is click and drag your csv file into the data window (the right side of the screen, next to the map), and it will automatically format your data into GeoJSON for you[6]. You can select the 'GeoJSON' option under 'Save.'
+
+**Ian: Want to do put a screenshot here?**
 
 2. To do it programmatically, you can use ogr2ogr.  You'll need to install GDAL[7], a commonly used GIS library that is frequently used to automate processes in python.  If you want to batch convert 500 CSV files into GeoJSON, this will be the way to go. [8]
 
@@ -127,6 +140,8 @@ export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
 ```
 
 **Create a VRT file**
+
+**Ian: make explicit to skip this section too if you used geojson.io?**
 
 VRT is an XML-based template that is used to convert non geographic data into a geographic data format without creating intermediate files.  Make sure that OGRVRTLayer, SrcDataSource have the same name as your filename (census_geocoded.vrt).  Indicate all of the properties based on the column name such as the population values for every census to include your geojson. This is what your VRT file will look like:
 
@@ -172,8 +187,9 @@ Your GeoJSON output should look something like this:
 ```
 Test this data out in http://geojson.io.  You should see points generated in the preview window.  That's your data!
 
-To prepare it for Leaflet web map, you'll need to manipulate the geojson and turn it into a js data file.  Add a "var boroughs = " to the beginning of your GeoJSON data file:
+To prepare it for Leaflet web map, you'll need to manipulate the geojson and turn it into a js data file.  Add a "var boroughs = " to the beginning of your GeoJSON data file. To do so, open it up in the text editor of your choice.
 
+**Ian: var boroughs or var countries - the example below is a bit different. Can you explain what it's doing? Why do we need to do this? How could they do this for other collections?**
 ```js
 var countries = {
 "type": "FeatureCollection",
@@ -191,6 +207,8 @@ var countries = {
 If you've tested your GeoJSON data, you might notice that not every point is geolocated correctly.  We know that every area name is a borough of London, but points appear all over United Kingdom, and some aren't located even in the country.
 
 To make the results more accurate, you should include an additional column called 'Country' and put 'United Kingdom' in every row of your data. For even greater accuracy add 'City' and put 'London' in every row of your data to provide additional context for your data.  Now change your python script to combine the Area Name and City column to geocode your data:
+
+**Ian: screenshot of an example of this? I wasn't quite sure where this new column shoudl go.**
 
 ```python
     io['helper'] = io['Area_Name'].map(str) + " " + io['Country']
@@ -212,6 +230,8 @@ python -m SimpleHTTPServer
 In your browser go to localhost:8000 and you should see the files you've been working with so far. 
 
 Now in your text editor open a new document and save it as an html file (mymap.html).  If you want to do a quick test, copy and paste the text below, refresh your localhost:8000 and open the html file in your browser.
+
+**Ian: What do they need to change to make this work on their machine? i.e. just change the 'census.js' line. And maybe brief note what SimpleHTTPServer is.**
 
 ```html
 <!DOCTYPE html>
