@@ -712,19 +712,6 @@ window.onload = function () {
 - Try time based visualizations
 - Use other types of data and geometries.  For instance, county boundaries, https://github.com/martinjc/UK-GeoJSON
 
-### Left to write:
-- Exercises, add screenshots
-- More information about geolocators and comparing them
-
-### Part 2 future?
-
-Mapbox, Cartodb, stamen, so many other plugins you can use with leaflet
-popup of info for points
-time based data
-county boundaries instead of points - you'd need to do a spatial join.  easier with GIS, maybe we can do it with Python. https://github.com/martinjc/UK-GeoJSON, https://gist.github.com/kimpham54/2ecf1ad08de64c2d6a8e
-
-
-
 **Ian:Great stuff. I was able to complete a lot of this lesson, especially now that the dependency issues were resolved. I think at this point, note the comments that I've made in bold - a few things need to be explained a wee bit more, and the stage after one generates the GeoJSON file need to be a bit more explicit - i.e. a screenshot showing GeoJSON, make clear when you come back into the lesson if you're doing it the simple way, what the 'boroughs' or 'country' variable means, and then a screenshot of the spreadsheet. I wasn't sure where to add 'country' field.Hope this helps! I think some minor tweaks to this, I can make another run through, and we will be very close to getting this out for peer review.**
 
 ** Thanks Ian! Your comments were helpful. You made me re-evaluate the way I was typically building webmaps.  I think the lesson makes a lot more sense now, and I'm more satisfied with the code now. **
