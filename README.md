@@ -479,7 +479,10 @@ Next, we're loading our data as another map layer, census.geojson.  This data wi
 ```
 Now we're creating the view for our map.  The boundary for our map will be based on the range of our data points in census.geojson.  You can also manually set your your viewport by using the [setView property](http://leafletjs.com/reference.html#map-set-methods). For example, if you're using .setView([0.0,-10.0], 2), the viewport coordinates '[0.0,-10.0], 2' means that you're setting the centre of the map to be 0.0, -10.0 and at a zoom level of 2.
 
-Finally, the map layers you created will be added to your map. Congratulations, this is your very first web map!  Now lets play around with it.
+
+![Web Map](images/webmap-04-result.png "My Web Map")
+
+Finally, the map layers you created will be added to your map. Put it all together and congratulations, you've got your web map!  Now lets play around with it.
 
 ### Exercise 1
 Change the map to use a viewport to 51.505 latitude, -0.09 longitude with a zoom level 9.
@@ -530,8 +533,8 @@ window.onload = function () {
   });
 
 };
-
 ```
+![Exercise 01 Answer](images/webmap-05-exercise01.png "Exercise 01")
 
 ### Exercise 2 Answer
 
@@ -568,7 +571,7 @@ window.onload = function () {
 };
 
 ```
-
+![Exercise 02 Answer](images/webmap-06-exercise02.png "Exercise 02")
 
 ### Exercise 3 Answer
 
@@ -605,7 +608,7 @@ window.onload = function () {
 
 };
 ```
-
+![Exercise 03 Answer](images/webmap-07-exercise03.png "Exercise 03")
 
 ### Exercise 4 Answer
 
@@ -663,7 +666,7 @@ window.onload = function () {
 
 };
 ```
-
+![Exercise 04 Answer](images/webmap-08-exercise04.png "Exercise 04")
 
 ### Exercise 5 Answer
 
@@ -714,10 +717,10 @@ window.onload = function () {
   });
 
 };
-
 ```
+![Exercise 05 Answer](images/webmap-09-exercise05.png "Exercise 05")
 
-### Future directions for you
+### Ideas to explore
 - Try other plugins and APIs.  There's Stamen, CartoDB, MarkerCluster, and more
 - Try time based visualizations
 - Use other types of data and geometries.  For instance, county boundaries, https://github.com/martinjc/UK-GeoJSON
