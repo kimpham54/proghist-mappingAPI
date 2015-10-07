@@ -534,7 +534,7 @@ window.onload = function () {
 
 };
 ```
-![Exercise 01 Answer](images/webmap-05-exercise01.png "Exercise 01")
+![Exercise 01 Answer](images/webmap-05-exercise01.jpg "Exercise 01")
 
 ### Exercise 2 Answer
 
@@ -571,7 +571,7 @@ window.onload = function () {
 };
 
 ```
-![Exercise 02 Answer](images/webmap-06-exercise02.png "Exercise 02")
+![Exercise 02 Answer](images/webmap-06-exercise02.jpg "Exercise 02")
 
 ### Exercise 3 Answer
 
@@ -608,7 +608,7 @@ window.onload = function () {
 
 };
 ```
-![Exercise 03 Answer](images/webmap-07-exercise03.png "Exercise 03")
+![Exercise 03 Answer](images/webmap-07-exercise03.jpg "Exercise 03")
 
 ### Exercise 4 Answer
 
@@ -666,7 +666,7 @@ window.onload = function () {
 
 };
 ```
-![Exercise 04 Answer](images/webmap-08-exercise04.png "Exercise 04")
+![Exercise 04 Answer](images/webmap-08-exercise04.jpg "Exercise 04")
 
 ### Exercise 5 Answer
 
@@ -718,7 +718,7 @@ window.onload = function () {
 
 };
 ```
-![Exercise 05 Answer](images/webmap-09-exercise05.png "Exercise 05")
+![Exercise 05 Answer](images/webmap-09-exercise05.jpg "Exercise 05")
 
 ### Ideas to explore
 - Try other plugins and APIs.  There's Stamen, CartoDB, MarkerCluster, and more
