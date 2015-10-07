@@ -1,4 +1,14 @@
-# Visualizing Data with Web Maps
+---
+title: Web Mapping with Python and Leaflet
+authors:
+- Kim Pham
+date: 2015
+reviewers:
+- Ian Milligan
+layout: default
+---
+
+# Web Mapping with Python and Leaflet
 
 ### Learning Objectives
 In this lesson, you will learn how to create a web map based on that data.  By the end of this lesson, you will be able to:
@@ -163,7 +173,7 @@ Now that you have a spreadsheet full of coordinate data, we can convert the CSV 
 
 **Kim: RESOLVED **
 
-![Adding data to geojson.io](images/geojsonio.gif "Drag and Drop GeoJSON creation!")
+![Adding data to geojson.io](images/webmap-01-geojsonio.gif "Drag and Drop GeoJSON creation!")
 
 Image Credit: with permission from Mauricio Giraldo Arteaga,
  NYPL Labs
@@ -250,7 +260,7 @@ To make the results more accurate, you should save another copy of the census-hi
 **Ian: screenshot of an example of this? I wasn't quite sure where this new column should go.**
 **Kim: RESOLVED - see below **
 
-![Adding a Country Column](images/countrycolumn.png "A new Country column")
+![Adding a Country Column](images/webmap-02-countrycolumn.png "A new Country column")
 
 Now change your python script to combine the Area Name and Country or City column to geocode your data:
 
@@ -482,7 +492,7 @@ Change the data source to stations.geojson.
 
 ### Exercise 4
 Change your data source back to census.geojson. Change your basemap layer to a mapbox tileset.  You need to get a Mapbox account, create a map or style and get your Mapbox API access token.
-![Mapbox](images/mapboxAPI.png "Mapbox API")
+![Mapbox](images/webmap-03-mapboxAPI.png "Mapbox API")
 
 ### Exercise 5
 Add a custom leaf icon, found in the images folder. Or use your own!
