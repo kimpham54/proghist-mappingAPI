@@ -8,6 +8,16 @@ In this lesson, you will learn how to create a web map based on that data.  By t
 
 ### Getting Started
 
+This lesson uses:
+
+- python (pip, geopy, pandas)
+- leaflet
+- jquery
+
+Optional in this lesson:
+- GDAL
+- Mapbox
+
 Optional: If you wish to follow along with pre-made scripts you can download them from https://github.com/kimpham54/proghist-mappingAPI
 
 To set up your working environment:
@@ -41,11 +51,11 @@ If you're familiar with _Programming Historian_, you might have already noticed 
 
 [Pandas](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe) is another python library that we will use.  It's very popular library amongst scientists and mathmaticians to manipulate and analyse data.
 
-If you've [already installed Python](http://programminghistorian.org/lessons/introduction-and-installation), open your [command line (using this lesson as a guideline if necessary)](http://programminghistorian.org/lessons/intro-to-bash) and install the Geopy and Pandas libraries:
+If you've [already installed Python](http://programminghistorian.org/lessons/introduction-and-installation) and pip, run type 'pip list' to see if you already have the geopy and pandas packages installed.  If not, open your [command line (using this lesson as a guideline if necessary)](http://programminghistorian.org/lessons/intro-to-bash) and install the Geopy and Pandas libraries:
 
 **Ian: Hi Kim - is this for Mac only? Do you know how you'd get this working on Windows? Also, more importantly, they will probably need to use sudo to get the following two pip installs to work? Should we tweak to note?**
 
-**Kim: UNRESOLVED COMMENT - Still needs test **
+**Kim: RESOLVED **
 
 ```bash
 pip install numpy
@@ -54,11 +64,16 @@ pip install pytz
 pip install geopy
 pip install pandas
 ```
+For Windows, you may need to install Microsoft Visual C++ Compiler for Python (for 2.7, you can download it from [Microsoft](http://aka.ms/vcpython27)). Set the environmental variables to recognize python and pip from the command line:
 
+```
+setx  PATH "%PATH%;C:\Python27"
+setx  PATH "%PATH%;C:\Python27\Scripts"
+```
 If you keep getting an error when you're tring to install these libraries, you may need to use 'sudo pip install' instead of just 'pip install'. You may also need to upgrade your libraries if you've installed them earlier and you find that you're encountering an error when using Python (i.e. an ImportError). In order to do so, the following command works:
 
 ```bash
-pip install python --uprade
+pip install python --upgrade
 ```
 
 Repeat for the other dependencies.
@@ -73,7 +88,7 @@ Next, Open your text editor and save your blank document as a python script (nam
 import geopy
 import pandas
 from geopy.geocoders import Nominatim, GoogleV3
-# The versions that used with this script are geopy 1.10.0, pandas 0.16.2
+# versions used: geopy 1.10.0, pandas 0.16.2, python 2.7.8
 ```
 In the code above, we are importing the different Python libraries that we will need to use later on in our script.  We import geopy, specifically the geopy.geocoders that we will call on later which is Nominatim and GoogleV3, and we import pandas.
 
@@ -163,6 +178,12 @@ Once you have GDAL installed, set the path:
 
 ```bash
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
+```
+
+for Windows:
+```
+setx PATH “%PATH%;C:\OSGeo4W\bin”
+setx GDAL_DATA “C:\OSGeo4W\share\gdal”
 ```
 
 **Create a VRT file**
