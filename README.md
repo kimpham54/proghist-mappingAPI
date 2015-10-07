@@ -480,7 +480,7 @@ Next, we're loading our data as another map layer, census.geojson.  This data wi
 Now we're creating the view for our map.  The boundary for our map will be based on the range of our data points in census.geojson.  You can also manually set your your viewport by using the [setView property](http://leafletjs.com/reference.html#map-set-methods). For example, if you're using .setView([0.0,-10.0], 2), the viewport coordinates '[0.0,-10.0], 2' means that you're setting the centre of the map to be 0.0, -10.0 and at a zoom level of 2.
 
 
-![Web Map](images/webmap-04-result.png "My Web Map")
+![Web Map](images/webmap-04-result.jpg "My Web Map")
 
 Finally, the map layers you created will be added to your map. Put it all together and congratulations, you've got your web map!  Now lets play around with it.
 
