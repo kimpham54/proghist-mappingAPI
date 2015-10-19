@@ -2,9 +2,9 @@
 title: Web Mapping with Python and Leaflet
 authors:
 - Kim Pham
-date: 2015
+date: 2015-10-19
 reviewers:
-- Ian Milligan
+- blank
 layout: default
 ---
 
