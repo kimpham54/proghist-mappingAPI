@@ -2,9 +2,9 @@
 title: Web Mapping with Python and Leaflet
 authors:
 - Kim Pham
-date: 2015
+date: 2015-10-19
 reviewers:
-- Ian Milligan
+- blank
 layout: default
 ---
 
@@ -32,14 +32,10 @@ Optional: If you wish to follow along with pre-made scripts you can download the
 
 To set up your working environment:
 1. Create a directory that you will work from  
-2. Import your folder in a text editor such as [TextWrangler](http://www.barebones.com/products/textwrangler/) for OS X, [Notepad++](https://notepad-plus-plus.org/) for Windows, or [Sublime Text](http://www.sublimetext.com/).
+2. Import your folder in a text editor such as [TextWrangler](http://www.barebones.com/products/textwrangler/) for OS X, [Notepad++](https://notepad-plus-plus.org/) for Windows, or [Sublime Text](http://www.sublimetext.com/).  
 
 ### Getting Data: Download the CSV
 We're going to start with a plain comma-separated values (CSV) data file and create a web map from it.
-
-**Ian:Why the footnotes: Should we just incorporate them into the main text of the lesson?**
-
-**Kim: RESOLVED - I'm removing the footnotes!**
 
 The original data file can be downloaded here: https://github.com/Robinlovelace/Creating-maps-in-R/blob/master/data/census-historic-population-borough.csv.  The original source of this data is from the [Greater London Authority London Datastore](http://data.london.gov.uk/dataset/historic-census-population).
 
@@ -47,25 +43,27 @@ The original data file can be downloaded here: https://github.com/Robinlovelace/
 
 Now that we have data, the next step is sometimes the hardest part: we need to figure out what to do with it.  In this case, we know what our end goal is: to make a web map with this data. You can work backwards from here to figure out what steps you need to take to achieve your goal.  
 
-Web maps typically represent locations and features from geographic data formats like geoJSON and KML. Every location in a grographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. In our data file, we have a list of placenames in our CSV data (the Area Name column), but no coordinates. What we want to do then is to somehow generate coordinates from these locations. This process is called geocoding.
+Web maps typically represent locations and features from geographic data formats such as geoJSON and KML. Every location in a geographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. For example, 43.6426,-79.3871 would represent the exact coordinates of the [CN Tower in Toronto](https://en.wikipedia.org/wiki/CN_Tower). 
 
-So here is our first problem to solve:  how can we geocode placenames?
+In our data file, we have a list of placenames in our CSV data (the Area Name column), but no coordinates. What we want to do then is to somehow generate coordinates from these locations. This process is called geocoding.
+
+So here is our first problem to solve:  how can we geocode placenames? How could we take an entry such as "CN Tower" and add the coordinates 43.6426,-79.3871 to it automatically?
 
 To clarify, we need to figure out how to gather coordinates for a location for each row of a CSV file in order to display these locations on a web map.  
 
-There's a simple way to do this: you can look up a coordinate online in Google Maps and put each coordinate in your spreadsheet manually.  But, if you had 5000 points the task becomes a little bit more daunting. If you're faced with a repetitive task, it might be worthwhile approach it programmatically.  
+There's a simple way to do this: you can look up a coordinate online in Google Maps and put each coordinate in your spreadsheet manually.  But, if you had 5000 points the task becomes a little bit more daunting. If you're faced with a repetitive task, it might be worthwhile to approach it programmatically.  
 
-If you're familiar with _Programming Historian_, you might have already noticed that there there are many lessons available on how to use Python.  Python is a great beginner programming language because it is easy to read and happens to be used a lot in GIS applications to optimize workflows.  One of the biggest advantages to Python is the impressive amount of libraries which act like pluggable tools to use for many different tasks.  Knowing that this is a good programmatic approach, we're now going to build a Python script that will automate geocode every address for us.
+If you're familiar with _Programming Historian_, you might have already noticed that there there are many [lessons available on how to use Python](http://programminghistorian.org/lessons/).  Python is a great beginner programming language because it is easy to read and happens to be used a lot in GIS applications to optimize workflows.  One of the biggest advantages to Python is the impressive amount of libraries which act like pluggable tools to use for many different tasks.  Knowing that this is a good programmatic approach, we're now going to build a Python script that will automate geocode every address for us.
 
 [Geopy](https://github.com/geopy/geopy) is a Python library that gives you access to the various geocoding APIs.  Geopy makes it easy for Python developers to locate the coordinates of addresses, cities, countries, and landmarks across the globe using third-party geocoders and other data sources. Geopy includes geocoders built by OpenStreetMap Nominatim, ESRI ArcGIS, Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yahoo! PlaceFinder, Yandex, IGN France, GeoNames, NaviData, OpenMapQuest, What3Words, OpenCage, SmartyStreets, geocoder.us, and GeocodeFarm geocoder services.
 
 [Pandas](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe) is another python library that we will use.  It's very popular library amongst scientists and mathmaticians to manipulate and analyse data.
 
-If you've [already installed Python](http://programminghistorian.org/lessons/introduction-and-installation) and pip, run type 'pip list' to see if you already have the geopy and pandas packages installed.  If not, open your [command line (using this lesson as a guideline if necessary)](http://programminghistorian.org/lessons/intro-to-bash) and install the Geopy and Pandas libraries:
+Finally, [Pip](http://pip.readthedocs.org/en/stable/) is a very useful package manager to help you install things like Geopy and Pandas! If you've [already installed Python](http://programminghistorian.org/lessons/introduction-and-installation) and pip, run type 'pip list' to see if you already have the geopy and pandas packages installed. If you do not have pip installed, [the instructions here are very straightforward](http://pip.readthedocs.org/en/stable/installing/).
 
-**Ian: Hi Kim - is this for Mac only? Do you know how you'd get this working on Windows? Also, more importantly, they will probably need to use sudo to get the following two pip installs to work? Should we tweak to note?**
+To install Geopy and Pandas, open your [command line (using this lesson as a guideline if necessary)](http://programminghistorian.org/lessons/intro-to-bash) and install the Geopy and Pandas libraries:
 
-**Kim: RESOLVED **
+On OS X or Linux, the following commands will install the necessary packages:
 
 ```bash
 pip install numpy
@@ -74,25 +72,23 @@ pip install pytz
 pip install geopy
 pip install pandas
 ```
+
 For Windows, you may need to install Microsoft Visual C++ Compiler for Python (for 2.7, you can download it from [Microsoft](http://aka.ms/vcpython27)). Set the environmental variables to recognize python and pip from the command line:
 
 ```
 setx  PATH "%PATH%;C:\Python27"
 setx  PATH "%PATH%;C:\Python27\Scripts"
 ```
+
 If you keep getting an error when you're tring to install these libraries, you may need to use 'sudo pip install' instead of just 'pip install'. You may also need to upgrade your libraries if you've installed them earlier and you find that you're encountering an error when using Python (i.e. an ImportError). In order to do so, the following command works:
 
 ```bash
 pip install python --upgrade
 ```
 
-Repeat for the other dependencies.
+Repeat for the other dependencies listed above.
 
 Next, Open your text editor and save your blank document as a python script (name it geocoder.py).  For the first part of your Python script, you will want to import your libraries and your data:
-
-**Ian: Can you explain what these commands do? Just one sentence per code block, just walking them through what each line does - i.e. you're importing commands, and then you're reading the CSV - what's index_col and header=0 sep="," - if they're using slightly differently formatted documents, with different seperators, how could they tweak it?**
-
-**Kim: RESOLVED - made changes below, needs review**
 
 ```python
 import geopy
@@ -100,6 +96,7 @@ import pandas
 from geopy.geocoders import Nominatim, GoogleV3
 # versions used: geopy 1.10.0, pandas 0.16.2, python 2.7.8
 ```
+
 In the code above, we are importing the different Python libraries that we will need to use later on in our script.  We import geopy, specifically the geopy.geocoders that we will call on later which is Nominatim and GoogleV3, and we import pandas.
 
 Then you want to create a function main() that reads your input CSV.
@@ -169,10 +166,6 @@ Now that you have a spreadsheet full of coordinate data, we can convert the CSV 
 
 **Option 1** - The easiest, recommended way is to use a UI tool developed by Mapbox: http://geojson.io.  All you have to do is click and drag your csv file into the data window (the right side of the screen, next to the map), and it will automatically format your data into GeoJSON for you. You can select the 'GeoJSON' option under 'Save.'  Save your GeoJSON file as 'census.geojson'.
 
-**Ian: Want to do put a screenshot here?**
-
-**Kim: RESOLVED **
-
 ![Adding data to geojson.io](images/webmap-01-geojsonio.gif "Drag and Drop GeoJSON creation!")
 
 Image Credit: with permission from Mauricio Giraldo Arteaga,
@@ -180,7 +173,7 @@ Image Credit: with permission from Mauricio Giraldo Arteaga,
 
 **Option 2** - To do it programmatically, you can use ogr2ogr.  You'll need to install [GDAL](http://www.kyngchaos.com/software/frameworks), a commonly used GIS library that is frequently used to automate processes in python.  If you want to batch convert 500 CSV files into GeoJSON, this will be the way to go. [8]
 
-### So you want to go with Option 2 (skip this section otherwise)
+### So you want to go with Option 2? (skip this section otherwise)
 
 **Using ogr2ogr**
 
@@ -197,10 +190,6 @@ setx GDAL_DATA “C:\OSGeo4W\share\gdal”
 ```
 
 **Create a VRT file**
-
-**Ian: make explicit to skip this section too if you used geojson.io?**
-
-**Kim: RESOLVED **
 
 VRT is an XML-based template that is used to convert non geographic data into a geographic data format without creating intermediate files.  Make sure that OGRVRTLayer, SrcDataSource have the same name as your filename (census_geocoded.vrt).  Indicate all of the properties based on the column name such as the population values for every census to include your geojson. This is what your VRT file will look like:
 
@@ -246,19 +235,11 @@ Your GeoJSON output should look something like this:
 ```
 Test this data out in http://geojson.io.  You should see points generated in the preview window.  That's your data!
 
-
-**Ian: var boroughs or var countries - the example below is a bit different. Can you explain what it's doing? Why do we need to do this? How could they do this for other collections?**
-
-**Kim: RESOLVED - I'm removing the part where you need to add var boroughs/countries because I don't like having to manipulate the actual data file.  Instead, we'll use jquery to load our geojson data into the leaflet map **
-
-### You finally have GeoJSON...but
+### You finally have GeoJSON... but you need to do some cleaning!
 
 If you've tested your GeoJSON data, you might notice that not every point is geolocated correctly.  We know that every area name is a borough of London, but points appear all over United Kingdom, and some aren't located even in the country.
 
 To make the results more accurate, you should save another copy of the census-historic-population-borough.csv file and include an additional column called 'Country' and put 'United Kingdom' in every row of your data. For even greater accuracy add 'City' and put 'London' in every row of your data to provide additional context for your data.
-
-**Ian: screenshot of an example of this? I wasn't quite sure where this new column should go.**
-**Kim: RESOLVED - see below **
 
 ![Adding a Country Column](images/webmap-02-countrycolumn.png "A new Country column")
 
@@ -281,6 +262,7 @@ Setup a test web server to test out our maps.  A web server is used to serve con
 ```
 python -m SimpleHTTPServer
 ```
+
 SimpleHTTPServer is a Python module. If you want to change the server to port 8080 (or any other port), use
 
 ```
@@ -290,10 +272,6 @@ python -m SimpleHTTPServer 8080
 In your browser go to http://localhost:8000 and you should see the files you've been working with so far.
 
 Now in your text editor open a new document and save it as an html file (mymap.html).  If you want to do a quick test, copy and paste the text below, refresh your http://localhost:8000 and open the html file in your browser.
-
-**Ian: What do they need to change to make this work on their machine? i.e. just change the 'census.js' line. And maybe brief note what SimpleHTTPServer is.**
-
-**Kim: RESOLVED**
 
 ```html
 
@@ -344,7 +322,6 @@ window.onload = function () {
 ```
 
 Do you see a map now?  Good! If not, you can troubleshoot by inspecting the browser, or by going back and retracing your steps.
-
 
 ### OK WHAT did I just make?
 
@@ -420,7 +397,6 @@ Seems a bit easier to undestand now, doesn't it? Now lets look at what the html 
 </head>
 ```
 
-
 The above code is the first section, or header of your html document. We are linking to the external javascript library and css stylesheets provided by leaflet.  We're also linking to our own stylesheet, style.css.
 
 ```html
@@ -479,7 +455,6 @@ Next, we're loading our data as another map layer, census.geojson.  This data wi
 ```
 Now we're creating the view for our map.  The boundary for our map will be based on the range of our data points in census.geojson.  You can also manually set your your viewport by using the [setView property](http://leafletjs.com/reference.html#map-set-methods). For example, if you're using .setView([0.0,-10.0], 2), the viewport coordinates '[0.0,-10.0], 2' means that you're setting the centre of the map to be 0.0, -10.0 and at a zoom level of 2.
 
-
 ![Web Map](images/webmap-04-result.jpg "My Web Map")
 
 Finally, the map layers you created will be added to your map. Put it all together and congratulations, you've got your web map!  Now lets play around with it.
@@ -499,7 +474,6 @@ Change your data source back to census.geojson. Change your basemap layer to a m
 
 ### Exercise 5
 Add a custom leaf icon, found in the images folder. Or use your own!
-
 
 ### Exercise 1 Answer
 
@@ -724,7 +698,3 @@ window.onload = function () {
 - Try other plugins and APIs.  There's Stamen, CartoDB, MarkerCluster, and more
 - Try time based visualizations
 - Use other types of data and geometries.  For instance, county boundaries, https://github.com/martinjc/UK-GeoJSON
-
-**Ian:Great stuff. I was able to complete a lot of this lesson, especially now that the dependency issues were resolved. I think at this point, note the comments that I've made in bold - a few things need to be explained a wee bit more, and the stage after one generates the GeoJSON file need to be a bit more explicit - i.e. a screenshot showing GeoJSON, make clear when you come back into the lesson if you're doing it the simple way, what the 'boroughs' or 'country' variable means, and then a screenshot of the spreadsheet. I wasn't sure where to add 'country' field.Hope this helps! I think some minor tweaks to this, I can make another run through, and we will be very close to getting this out for peer review.**
-
-** Thanks Ian! Your comments were helpful. You made me re-evaluate the way I was typically building webmaps.  I think the lesson makes a lot more sense now, and I'm more satisfied with the code now. **
