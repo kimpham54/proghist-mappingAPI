@@ -43,7 +43,7 @@ The original data file can be downloaded here: https://github.com/Robinlovelace/
 
 Now that we have data, the next step is sometimes the hardest part: we need to figure out what to do with it.  In this case, we know what our end goal is: to make a web map with this data. You can work backwards from here to figure out what steps you need to take to achieve your goal.  
 
-Web maps typically represent locations and features from geographic data formats such as geoJSON and KML. Every location in a geographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. For example, 43.6426,-79.3871 would represent the exact coordinates of the [CN Tower in Toronto](https://en.wikipedia.org/wiki/CN_Tower). 
+Web maps typically represent locations and features from geographic data formats such as geoJSON and KML. Every location in a geographic data file can be considered to have geometry (such as points, lines, polygons) as well as additional properties. Web maps typically understand locations as a series of coordinates. For example, 43.6426,-79.3871 would represent the exact coordinates of the [CN Tower in Toronto](https://en.wikipedia.org/wiki/CN_Tower).
 
 In our data file, we have a list of placenames in our CSV data (the Area Name column), but no coordinates. What we want to do then is to somehow generate coordinates from these locations. This process is called geocoding.
 
@@ -166,7 +166,9 @@ Now that you have a spreadsheet full of coordinate data, we can convert the CSV 
 
 **Option 1** - The easiest, recommended way is to use a UI tool developed by Mapbox: http://geojson.io.  All you have to do is click and drag your csv file into the data window (the right side of the screen, next to the map), and it will automatically format your data into GeoJSON for you. You can select the 'GeoJSON' option under 'Save.'  Save your GeoJSON file as 'census.geojson'.
 
-![Adding data to geojson.io](images/webmap-01-geojsonio.gif "Drag and Drop GeoJSON creation!")
+![Image: Adding data to geojson.io](images/webmap-01-geojsonio.gif "Drag and Drop GeoJSON creation!")
+
+{% include figure.html src="../images/webmap-01-geojsonio.gif" caption="Adding data to geojson.io" %}
 
 Image Credit: with permission from Mauricio Giraldo Arteaga,
  NYPL Labs
@@ -241,7 +243,9 @@ If you've tested your GeoJSON data, you might notice that not every point is geo
 
 To make the results more accurate, you should save another copy of the census-historic-population-borough.csv file and include an additional column called 'Country' and put 'United Kingdom' in every row of your data. For even greater accuracy add 'City' and put 'London' in every row of your data to provide additional context for your data.
 
-![Adding a Country Column](images/webmap-02-countrycolumn.png "A new Country column")
+![Image: Adding a Country Column](images/webmap-02-countrycolumn.png "A new Country column")
+
+{% include figure.html src="../images/webmap-02-countrycolumn.png" caption="Add a new Country column to your spreadsheet" %}
 
 Now change your python script to combine the Area Name and Country or City column to geocode your data:
 
@@ -455,7 +459,10 @@ Next, we're loading our data as another map layer, census.geojson.  This data wi
 ```
 Now we're creating the view for our map.  The boundary for our map will be based on the range of our data points in census.geojson.  You can also manually set your your viewport by using the [setView property](http://leafletjs.com/reference.html#map-set-methods). For example, if you're using .setView([0.0,-10.0], 2), the viewport coordinates '[0.0,-10.0], 2' means that you're setting the centre of the map to be 0.0, -10.0 and at a zoom level of 2.
 
-![Web Map](images/webmap-04-result.jpg "My Web Map")
+![Image: Web Map](images/webmap-03-result.jpg "My Web Map")
+{% include figure.html src="…/images/webmap-03-result.jpg" caption=“Final Result: Your Web Map!” %}
+
+
 
 Finally, the map layers you created will be added to your map. Put it all together and congratulations, you've got your web map!  Now lets play around with it.
 
@@ -470,7 +477,9 @@ Change the data source to stations.geojson.
 
 ### Exercise 4
 Change your data source back to census.geojson. Change your basemap layer to a mapbox tileset.  You need to get a Mapbox account, create a map or style and get your Mapbox API access token.
-![Mapbox](images/webmap-03-mapboxAPI.png "Mapbox API")
+![Image: Mapbox](images/webmap-04-mapboxAPI.png "Mapbox API")
+
+{% include figure.html src="…/images/webmap-04-mapboxAPI.png" caption=“Final Result: Your Web Map!” %}
 
 ### Exercise 5
 Add a custom leaf icon, found in the images folder. Or use your own!
@@ -508,7 +517,9 @@ window.onload = function () {
 
 };
 ```
-![Exercise 01 Answer](images/webmap-05-exercise01.jpg "Exercise 01")
+![Image: Exercise 01 Answer](images/webmap-05-exercise01.jpg "Exercise 01")
+
+{% include figure.html src="…/images/webmap-05-exercise01.jpg" caption=“Exercise 01 Map Result” %}
 
 ### Exercise 2 Answer
 
@@ -545,7 +556,9 @@ window.onload = function () {
 };
 
 ```
-![Exercise 02 Answer](images/webmap-06-exercise02.jpg "Exercise 02")
+![Image: Exercise 02 Answer](images/webmap-06-exercise02.jpg "Exercise 02")
+
+{% include figure.html src="…/images/webmap-06-exercise02.jpg" caption=“Exercise 02 Map Result” %}
 
 ### Exercise 3 Answer
 
@@ -582,7 +595,9 @@ window.onload = function () {
 
 };
 ```
-![Exercise 03 Answer](images/webmap-07-exercise03.jpg "Exercise 03")
+![Image: Exercise 03 Answer](images/webmap-07-exercise03.jpg "Exercise 03")
+
+{% include figure.html src="…/images/webmap-07-exercise03.jpg" caption=“Exercise 03 Map Result” %}
 
 ### Exercise 4 Answer
 
@@ -640,7 +655,9 @@ window.onload = function () {
 
 };
 ```
-![Exercise 04 Answer](images/webmap-08-exercise04.jpg "Exercise 04")
+![Image: Exercise 04 Answer](images/webmap-08-exercise04.jpg "Exercise 04")
+
+{% include figure.html src="…/images/webmap-08-exercise04.jpg" caption=“Exercise 04 Map Result” %}
 
 ### Exercise 5 Answer
 
@@ -692,7 +709,9 @@ window.onload = function () {
 
 };
 ```
-![Exercise 05 Answer](images/webmap-09-exercise05.jpg "Exercise 05")
+![Image: Exercise 05 Answer](images/webmap-09-exercise05.jpg "Exercise 05")
+
+{% include figure.html src="…/images/webmap-09-exercise05.jpg" caption=“Exercise 05 Map Result” %}
 
 ### Ideas to explore
 - Try other plugins and APIs.  There's Stamen, CartoDB, MarkerCluster, and more
